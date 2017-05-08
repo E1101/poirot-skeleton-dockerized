@@ -1,0 +1,1 @@
+{ "indexes" : [ { "v" : 1, "key" : { "_id" : 1 }, "name" : "_id_", "ns" : "oauth.oauth.token_refresh" }, { "v" : 1, "key" : { "date_mongo_expiration" : 1 }, "name" : "date_mongo_expiration_1", "ns" : "oauth.oauth.token_refresh" }, { "v" : 1, "key" : { "identifier" : { "$numberLong" : "1" } }, "name" : "identifier_1", "ns" : "oauth.oauth.token_refresh" } ] }

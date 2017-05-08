@@ -1,0 +1,60 @@
+<?php
+/**
+ * @var \Module\Foundation\HttpSapi\ViewModelRenderer $this
+ *
+ * @var string $value_truncate
+ * @var array  $self           ['validation_code' => (string)]
+ */
+
+use Module\OAuth2\Actions\Recover\SigninChallenge\ChallengeMobile;
+
+$this->htmlHeadTitle('Alternate Login Issues');
+
+$this->htmlScript()
+    ->attachFile($this->path('app-assets').'/js/pages/common.js')
+    ->attachFile($this->path('app-assets').'/js/pages/verification_resend.js')
+;
+
+if ($this->flashMessage(ChallengeMobile::FLASH_MESSAGE_ID)->hasMessages())
+    echo $this->view( 'partial/flashMessage', $this->flashMessage(ChallengeMobile::FLASH_MESSAGE_ID)->fetchMessages() );
+?>
+<div class="login_page_wrapper">
+    <div class="md-card" id="login_card">
+        <div class="md-card-content large-padding" id="login_form">
+            <form action="<?php echo $this->url(null, null, true) ?>" method="post" novalidate>
+                <div class="uk-form-row" id="recognizeImages">
+                    <img src="<?php echo $this->path('app-assets').'/img/sms.png' ?>">
+                    <p class="info">
+                        <span>یک پیامک حاوی کد شناسه برای شما ارسال شده</span>
+                        <span class="ltr"><?=$value_truncate?></span>
+                        <br/>
+                        <span>
+                            <a href="<?php echo $this->url('main/oauth/recover/validate_resend', [
+                                    'validation_code' => $self['validation_code'],
+                                    'identifier_type' => 'mobile',
+                                ]
+                            ) ?>" onclick="return handleResend(this);" class="resend-link"><i class="material-icons">repeat</i> ارسال مجدد</a>
+                        </span>
+
+                    </p>
+                    <br/>
+                    <div class="uk-width-1-2">
+                        <input class="md-input font-is" type="text" id="confirm_code" name="confirm_code" autofocus/>
+                    </div>
+                    <span class="uk-form-help-block">کدی که روی موبایل خود دریافت کرده اید را وارد کنید.</span>
+                </div>
+
+                <div class="uk-margin-medium-top">
+                    <button type="submit" class="md-btn md-btn-primary md-btn-block md-btn-large font-is">تایید</button>
+                </div>
+
+                <?php
+                $url = $this->url('main/oauth/recover/signin_recognize', null, true);
+                // prepend to achieve delete u params if has
+                $url = \Poirot\Psr7\modifyUri($url->uri(), ['query' => ['u' => null] ], \Poirot\Psr7\URI_PREPEND);
+                ?>
+                <a href="<?php echo $url ?>" id="backStep" class="uk-position-top-right uk-close uk-margin-right uk-margin-top"></a>
+            </form>
+        </div>
+    </div>
+</div>

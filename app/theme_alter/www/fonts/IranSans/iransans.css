@@ -1,0 +1,23 @@
+@charset "utf-8";
+/* Font faces */
+
+@font-face {
+    font-family: 'IS';
+    font-weight: normal;
+    font-style: normal;
+    src: url('IranSans.eot');
+    src: url('IranSans.eot#iefix') format('embedded-opentype'),
+    url('IranSans.ttf')  format('truetype'),
+    url('IranSans.woff') format('woff'),
+    url('IranSans.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'ISN';
+    font-weight: normal;
+    font-style: normal;
+    src: url('IranSansNumbers.eot');
+    src: url('IranSansNumbers.eot#iefix') format('embedded-opentype'),
+    url('IranSansNumbers.ttf')  format('truetype'),
+    url('IranSansNumbers.woff') format('woff'),
+    url('IranSansNumbers.woff2') format('woff2');
+}

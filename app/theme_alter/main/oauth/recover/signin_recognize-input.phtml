@@ -1,0 +1,41 @@
+<?php
+/**
+ * @var \Module\Foundation\HttpSapi\ViewModelRenderer $this
+ */
+use Module\OAuth2\Actions\Recover\SigninRecognizePage;
+
+$this->htmlHeadTitle('Alternate Login Issues');
+
+$this->htmlScript()
+    ->attachFile($this->path('app-assets').'/js/pages/common.js')
+;
+
+if ($this->flashMessage(SigninRecognizePage::FLASH_MESSAGE_ID)->hasMessages())
+    echo $this->view( 'partial/flashMessage', $this->flashMessage(SigninRecognizePage::FLASH_MESSAGE_ID)->fetchMessages() );
+
+?>
+<div class="login_page_wrapper">
+    <div class="md-card" id="login_card">
+        <div class="md-card-content large-padding" id="login_form">
+            <form action="<?php echo $this->url(null, null, true) ?>" method="post" novalidate>
+                <div class="uk-form-row">
+                    <div class="parsley-row">
+                        <label for="identifier">مشخصه کاربری</label>
+                        <input class="md-input font-is" type="text" id="identifier" name="identifier" placeholder="نام کاربری، ایمیل و یا شماره همراه" autocomplete="off" required/>
+                        <span class="uk-form-help-block">مشخصه کاربری، شامل نام کاربری - پست الکترونیک و یا شماره همراهی است که با آن ثبت نام کرده اید.</span>
+                    </div>
+                </div>
+                <div class="uk-margin-medium-top">
+                    <button type="submit" class="md-btn md-btn-primary md-btn-block md-btn-large font-is">بعدی</button>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+    <div class="uk-margin-top uk-text-center">
+        <a href="<?php echo $this->url('main/oauth/login', null, true) ?>">ورود مستقیم !!</a>
+        |
+        <a href="<?php echo $this->url('main/oauth/register', null, true) ?>">ثبت نام</a>
+    </div>
+</div>

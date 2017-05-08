@@ -1,0 +1,10 @@
+*{
+    font-family: ISN, IS, Roboto, sans-serif;
+}
+.font-is{
+    font-family: ISN, IS, Roboto, sans-serif !important;
+}
+.parsley-errors-list span{
+    font-size: 11px;
+    color: #E53935;
+}

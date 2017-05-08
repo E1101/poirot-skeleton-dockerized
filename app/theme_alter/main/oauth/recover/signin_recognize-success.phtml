@@ -1,0 +1,47 @@
+<?php
+/**
+ * @var \Module\Foundation\HttpSapi\ViewModelRenderer $this
+ * @var array                                         $user
+ */
+$this->htmlHeadTitle('Alternate Login Issues');
+
+$this->htmlScript()
+    ->attachFile($this->path('app-assets').'/js/pages/common.js')
+;
+?>
+<div class="login_page_wrapper">
+    <div class="md-card" id="login_card">
+        <div class="md-card-content large-padding" id="login_form">
+            <?php
+            $url = $this->url('main/oauth/recover/signin_challenge', [ 'uid' => $user['uid'] ], true);
+            // prepend to achieve delete u params if has
+            $url = \Poirot\Psr7\modifyUri($url->uri(), ['query' => ['u' => null] ], \Poirot\Psr7\URI_PREPEND);
+            ?>
+            <form action="<?php echo $url ?>" method="post" novalidate>
+                <div class="uk-form-row" id="recognizeImages">
+                    <img src="<?php echo $this->path('app-assets').'/img/user.png' ?>">
+                    <p><?php echo $user['fullname']; ?></p>
+                    <span class="uk-form-help-block">جهت تلاش برای ورود به سیستم، روی شروع کلیک کنید.</span>
+                </div>
+                <div class="uk-margin-medium-top">
+                    <button type="submit" class="md-btn md-btn-primary md-btn-block md-btn-large font-is">شروع</button>
+                </div>
+                <?php
+                    $url = $this->url('main/oauth/recover/signin_recognize', null, true);
+                    // prepend to achieve delete u params if has
+                    $url = \Poirot\Psr7\modifyUri($url->uri(), ['query' => ['u' => null] ], \Poirot\Psr7\URI_PREPEND);
+                ?>
+                <a href="<?php echo $url ?>" id="backStep" class="uk-position-top-right uk-close uk-margin-right uk-margin-top"></a>
+            </form>
+        </div>
+
+    </div>
+    <div class="uk-margin-top uk-text-center">
+        <?php
+        $url = $this->url('main/oauth/login', null, true);
+        // prepend to achieve delete u params if has
+        $url = \Poirot\Psr7\modifyUri($url->uri(), ['query' => ['u' => null] ], \Poirot\Psr7\URI_PREPEND);
+        ?>
+        <a href="<?php echo $url; ?>">ورود مستقیم با کلمه عبور</a>
+    </div>
+</div>

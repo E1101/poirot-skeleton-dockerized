@@ -1,0 +1,26 @@
+{
+    "name": "papioniha.com"
+    , "authors": [
+        {
+            "name": "Payam Naderi"
+            , "email": "naderi.payam@gmail.com"
+        }
+    ]
+    , "require": {
+        "poirot/skeleton": "dev-devel"
+        , "poirot/mod-oauth2_server": "dev-devel"
+        , "poirot/mod-content": "dev-devel"
+        , "poirot/mod-tenderbin": "dev-devel"
+    }
+    , "require-dev": {
+       "mmucklo/krumo": "^0.5.0"
+    }
+    , "minimum-stability": "dev"
+    , "prefer-stable" : true
+    , "repositories": [
+         { "type": "git" ,"url": "https://github.com/phPoirot/Poirot-Skeleton.git" }
+       , { "type": "git" ,"url": "https://github.com/phPoirot/Module-OAuth2Server.git" }
+       , { "type": "git" ,"url": "https://github.com/phPoirot/Module-Content.git" }
+       , { "type": "git" ,"url": "https://github.com/phPoirot/Module-TenderBin.git" }
+    ]
+}

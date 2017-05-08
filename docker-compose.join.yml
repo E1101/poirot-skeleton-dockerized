@@ -1,0 +1,48 @@
+version: '2'
+
+services:
+
+  ## --------------------------------------------
+  ## | Web Server Php7 and required Extensions
+  ## --------------------------------------------
+  papion_web-server:
+    # not accessible from host
+    #ports:
+    #- "8000:80"
+    environment:
+      ## force /pap/ as a prefix to all routes
+      # - PT_BASEURL=/pap
+    networks:
+      - papion-network
+      - network-front-proxy
+
+  ## --------------------------------------------
+  ## | Data Base Master Mongo Server
+  ## --------------------------------------------
+  # (!) poirot db configuration set to connect to it's host name
+  db-master-mongo:
+    networks:
+      - papion-network
+
+  ###################
+  ## Administration
+  ## ################
+
+  ## --------------------------------------------
+  ## | Mongo Db Administration
+  ## --------------------------------------------
+  papion_admin-rockmongo:
+    ### access rockmongo with port binding
+    ports:
+      - "32800:80"
+    networks:
+      - papion-network
+      - network-front-proxy
+
+networks:
+  papion-network:
+  network-front-proxy:
+    external:
+      name: frontproxy_front-network
+##              ^             ^
+##       name of project    network created inside that project

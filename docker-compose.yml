@@ -1,0 +1,94 @@
+version: '2'
+
+volumes:
+  vol-mongodb:
+    #### - /data/db
+  vol-mongodb-log:
+    #### - /var/log/mongodb/
+  vol-web-server-data:
+    #### - /data/poirot
+  vol-share:
+
+
+services:
+
+  ## --------------------------------------------
+  ## | Web Server Php7 and required Extensions
+  ## --------------------------------------------
+  papion_web-server:
+    build:
+      context: ./.docker-compose/web-server
+      dockerfile: Dockerfile
+    depends_on:
+      - db-master-mongo
+    image: papion_web-server
+    expose:
+      - "80"
+    environment:
+      ## XDebug:
+      - DEBUG=False
+      # when debug is true required
+      # - HOST_IP=[YOUR.IP]
+      ## Poirot:
+      #- PT_BASEURL=/base
+      ## OAuth Client Debug Mode -------------|
+      - OAUTH_DEBUG_MODE=False
+      - OAUTH_DEBUG_CLIENTID=client_id
+      - OAUTH_DEBUG_OWNERID=owner_id
+      - OAUTH_DEBUG_SCOPES=test debug
+      ## OAUTH Client Remote Server ------------------------------------------|
+      - OAUTH_BASE_URL=http://172.19.0.1:8000/
+      - OAUTH_CLIENT_ID=test@default.axGEceVCtGqZAdW3rc34sqbvTASSTZxD
+      - OAUTH_CLIENT_SECRET=xPWIpmzBK38MmDRd
+    volumes:
+     - ./app/:/var/www/html/
+     - ./.docker-compose/web-server/etc/php/php.ini:/etc/php/7.0/apache2/conf.d/100-custom_docker.ini
+     - ./.docker-compose/web-server/skeleton/.env.php:/docker/.env.php
+     - ./.docker-compose/web-server/skeleton/config/:/docker/config/
+     # (!) poirot data persist defined with .env.php to here
+     - vol-web-server-data:/data/poirot/
+     - vol-share:/v-share/
+
+  ## --------------------------------------------
+  ## | Data Base Master Mongo Server
+  ## --------------------------------------------
+  # (!) poirot db configuration set to connect to it's host name
+  db-master-mongo:
+    image: payam/mongodb:3.0
+    expose:
+     - "27017"
+    volumes:
+     - vol-mongodb:/data/db/
+     - vol-mongodb-log:/var/log/mongodb/
+     - vol-share:/v-share/
+
+  ###################
+  ## Administration
+  ## ################
+
+  ## --------------------------------------------
+  ## | Backup Data
+  ## --------------------------------------------
+  papion_admin:
+    build:
+      context: ./.docker-compose/backup
+      dockerfile: Dockerfile
+    image: papion_admin
+    depends_on:
+      - db-master-mongo
+    volumes:
+      - ./data/administration/:/v-administration
+      - vol-share:/v-share/
+
+  ## --------------------------------------------
+  ## | Mongo Db Administration
+  ## --------------------------------------------
+  papion_admin-mongo:
+    image: mongo-express:latest
+    depends_on:
+      - db-master-mongo
+    ports:
+      - "8081:8081"
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=db-master-mongo
+

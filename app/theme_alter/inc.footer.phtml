@@ -1,0 +1,13 @@
+<?php
+/** @var \Module\Foundation\HttpSapi\ViewModelRenderer $this */
+?>
+
+<?php // Inline Scripts
+echo $this->htmlScript()
+    ->attachFile($this->path().'/js/uikit_custom.min.js')
+    ->attachFile($this->path().'/js/altair_admin_common.min.js')
+    ->attachFile($this->path().'/js/kendoui_custom.min.js')
+    ->attachScript('altair_forms.parsley_validation_config()') // Order Is Mandatory
+    ->attachFile($this->path().'/js/parsley.min.js')
+;
+?>

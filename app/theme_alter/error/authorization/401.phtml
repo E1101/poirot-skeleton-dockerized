@@ -1,0 +1,23 @@
+<?php
+/**
+ * @var \Module\Foundation\HttpSapi\ViewModelRenderer $this
+ * @var \Exception $exception
+ */
+$exception = $exception->getPrevious();
+?>
+<div class="error_page_header">
+    <div class="uk-width-8-10 uk-container-center">خطای دسترسی!</div>
+</div>
+<div class="error_page_content">
+    <div class="uk-width-8-10 uk-container-center">
+        <p class="heading_b font-is">شما به این صفحه دسترسی ندارید.</p>
+        <?php if ($exception->getAuthenticator()) { ?>
+        <p class="uk-text-large"><?php
+            echo sprintf(
+                'Request Has Denied By: (%s) Realm.'
+                , $exception->getAuthenticator()->identifier()->getRealm()
+            ); ?>
+        </p>
+        <?php } ?>
+    </div>
+</div>

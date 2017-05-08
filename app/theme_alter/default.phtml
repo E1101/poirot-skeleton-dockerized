@@ -1,0 +1,21 @@
+<?php
+/** @var \Module\Foundation\HttpSapi\ViewModelRenderer $this */
+?>
+<!doctype html>
+<!--[if lte IE 9]>
+<html class="lte-ie9" lang="en" dir="rtl">
+<![endif]-->
+<!--[if gt IE 9]><!-->
+<html lang="en" dir="rtl">
+<!--<![endif]-->
+    <head>
+        <?php echo $this->capture('inc.header.phtml') ?>
+    </head>
+
+    <body class="login_page">
+
+        <?php echo $content; ?>
+
+        <?php echo $this->capture('inc.footer.phtml') ?>
+    </body>
+</html>

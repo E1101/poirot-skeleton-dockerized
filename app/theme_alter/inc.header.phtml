@@ -1,0 +1,27 @@
+<?php
+/** @var \Module\Foundation\HttpSapi\ViewModelRenderer $this */
+?>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="msapplication-tap-highlight" content="no"/>
+
+<?php echo $this->htmlHeadTitle('Account Server') ?>
+
+<?php $this->path('app-assets') ## set app-assets as last invoked path and continue ...  ?>
+
+<link rel="stylesheet" media="all" href="<?php echo $this->path() ?>/fonts/IranSans/iransans.css"/>
+<link rel="stylesheet" media="all" href="<?php echo $this->path() ?>/css/kendo.common-material.min.css"/>
+<link rel="stylesheet" media="all" href="<?php echo $this->path() ?>/css/kendo.material.min.css"/>
+<link rel="stylesheet" media="all" href="<?php echo $this->path() ?>/css/kendo.rtl.min.css"/>
+<link rel="stylesheet" media="all" href="<?php echo $this->path() ?>/css/uikit.rtl.css"/>
+<link rel="stylesheet" media="all" href="<?php echo $this->path() ?>/css/login_page.min.css"/>
+<link rel="stylesheet" media="all" href="<?php echo $this->path() ?>/css/pages/register.css"/>
+<link rel="stylesheet" media="all" href="<?php echo $this->path() ?>/css/toastr.css"/>
+
+
+<?php // Head Scripts Attached From Head Section
+echo $this->htmlScript('head')
+    ->attachFile($this->path().'/js/common.min.js')
+    ->attachFile($this->path().'/js/toastr.js')
+;

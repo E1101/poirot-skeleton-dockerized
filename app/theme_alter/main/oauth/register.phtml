@@ -1,0 +1,114 @@
+<?php
+/**
+ * @var \Module\Foundation\HttpSapi\ViewModelRenderer $this
+ *
+ * @var array|null $recovery_flow
+ * 'user' => [
+ *   'uid'      => $u->getUID(),
+ *   'fullname' => $u->getFullName(),
+ *   #'avatar'  => $userAvatarUrl
+ *  ],
+ *  '_link' => '/recover/signin/challenge/586a484fe39b7',
+ */
+
+use Module\OAuth2\Actions\User\RegisterPage;
+
+$this->htmlHeadTitle('Register');
+
+$this->htmlScript()
+    ->attachFile($this->path('app-assets').'/js/pages/register.js')
+    ->attachFile($this->path().'/js/pages/common.js')
+;
+
+if ($this->flashMessage(RegisterPage::FLASH_MESSAGE_ID)->hasMessages())
+    echo $this->view( 'partial/flashMessage', $this->flashMessage(RegisterPage::FLASH_MESSAGE_ID)->fetchMessages() );
+
+?>
+
+<?php
+// RECOVERY FOLLOW FOR ACCOUNT REGISTRY THAT EXISTS
+if (isset($recovery_flow)) {
+    ?>
+    <div class="login_page_wrapper">
+        <div class="md-card" id="login_card">
+            <div class="md-card-content large-padding" id="login_form">
+                <form action="<?php echo $this->url('main/oauth/recover/signin_challenge', [ 'uid' => $recovery_flow['user']['uid'] ], true) ?>" method="post" novalidate>
+                    <div class="uk-form-row" id="recognizeImages">
+                        <img src="<?php echo $this->path('app-assets').'/img/user.png' ?>">
+                        <p><?php echo $recovery_flow['user']['fullname']; ?></p>
+                        <p><?php echo $recovery_flow['user']['identifier_exists']; ?></p>
+                        <b><span class="uk-form-help-block">اگر این شما هستید، قبلا در سیستم ثبت نام شده اید.</span></b>
+                        <br/>
+                        <span class="uk-form-help-block">
+                            <?php echo sprintf(
+                                ' کلمه عبور را به خاطر دارید؟ از %s وارد شوید.'
+                                , sprintf('<a href="%s">این لینک</a>', $this->url('main/oauth/login', null, true) )
+                            ) ?>
+                        </span>
+                        <span class="uk-form-help-block">و یا برای تلاش برای ورود به سیستم روی دکمه زیر کلیک کنید.</span>
+                    </div>
+                    <div class="uk-margin-medium-top">
+                        <button type="submit" class="md-btn md-btn-primary md-btn-block md-btn-large font-is">تلاش برای ورود به سیستم</button>
+                    </div>
+                    <a href="<?php echo $this->url('main/oauth/register', null, true) ?>" id="backStep" class="uk-position-top-right uk-close uk-margin-right uk-margin-top"></a>
+                </form>
+            </div>
+
+        </div>
+    </div>
+<?php
+     // we don't want display sections below
+} else {
+?>
+
+<div class="login_page_wrapper">
+    <div class="md-card" id="login_card">
+        <div class="md-card-content large-padding" id="register_form">
+            <h2 class="heading_a uk-margin-medium-bottom font-is">عضویت در سامانه</h2>
+            <form action="<?php echo $this->url('main/oauth/register', null, true) ?>" method="POST" novalidate>
+                <div class="uk-form-row">
+                    <div class="parsley-row">
+                        <label class="label-required" for="register_fullname">نام کامل</label>
+                        <input class="md-input font-is" type="text" id="register_fullname" name="fullname" required/>
+                    </div>
+                </div>
+                <div class="uk-form-row">
+                    <div class="parsley-row">
+                        <label class="label-required" for="email">ایمیل</label>
+                        <input value="" class="md-input font-is" type="text" id="email" name="email" autocomplete="off" required/>
+                        <p class="form-hint">نمونه: example@example.com</p>
+                    </div>
+                </div>
+                <div class="uk-form-row">
+                    <div class="parsley-row uk-form-password">
+                        <label class="label-required" for="password">گذرواژه</label>
+                        <input value="" class="md-input font-is" type="password" id="password" name="credential" minlength="6" maxlength="32" autocomplete="off" required/>
+                        <a href="" class="uk-form-password-toggle" data-uk-form-password="{lblShow:'نمایش', lblHide:'پنهان'}">نمایش</a>
+                    </div>
+                </div>
+                <div class="uk-form-row uk-grid">
+                    <div class="uk-width-1-2">
+                        <label for="register_email">شماره همراه</label>
+                        <input class="md-input font-is" type="text" id="register_phone" name="mobile[number]"/>
+                    </div>
+                    <div class="uk-width-1-2">
+                        <input id="register_country" class="uk-form-width-medium" placeholder="کشور" name="mobile[country]" disabled/>
+                    </div>
+                </div>
+
+                <div class="uk-margin-medium-top">
+                    <button type="submit" class="md-btn md-btn-primary md-btn-block md-btn-large font-is">ثبت نام</button>
+                </div>
+
+                <hr/>
+                <span class="uk-form-help-block">* فیلد های ستاره دار باید حتما پر شوند! </span>
+
+            </form>
+        </div>
+    </div>
+
+    <div class="uk-margin-top uk-text-center">
+        <a href="<?php echo $this->url('main/oauth/login', null, true) ?>">اگر ثبت نام کرده اید، از اینجا وارد شوید.</a>
+    </div>
+</div>
+<?php } ?>

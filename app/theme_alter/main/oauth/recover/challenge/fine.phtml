@@ -1,0 +1,35 @@
+<?php
+/**
+ * @var \Module\Foundation\HttpSapi\ViewModelRenderer $this
+ */
+$this->htmlHeadTitle('Alternate Login Issues');
+
+$this->htmlScript()
+    ->attachFile($this->path('app-assets').'/js/pages/common.js')
+;
+?>
+<div class="login_page_wrapper">
+    <div class="md-card" id="login_card">
+        <div class="md-card-content large-padding" id="login_form">
+                <div class="uk-form-row" id="recognizeImages">
+                    <img src="<?php echo $this->path('app-assets').'/img/lock.png' ?>">
+                    <p class="info">
+                        <span>هیچگونه راه کار جایگرین دیگری برای ورود به سایت وجود ندارد</span>
+                        <span class="uk-form-help-block">پیشنهاد میکنیم ثبت نام کنید.</span>
+                    </p>
+                    <br/>
+                </div>
+                <?php
+                $url = $this->url('main/oauth/recover/signin_recognize', null, true);
+                // prepend to achieve delete u params if has
+                $url = \Poirot\Psr7\modifyUri($url->uri(), ['query' => ['u' => null] ], \Poirot\Psr7\URI_PREPEND);
+                ?>
+                <a href="<?php echo $url ?>" id="backStep" class="uk-position-top-right uk-close uk-margin-right uk-margin-top"></a>
+        </div>
+    </div>
+    <div class="md-card" id="next-step">
+        <div class="md-card-content large-padding" id="next-step-content">
+            <a href="<?php echo $this->url('main/oauth/register', null, true) ?>">از اینجا ثبت نام کنید</a>
+        </div>
+    </div>
+</div>
