@@ -1,16 +1,28 @@
 <?php
-return array(
+return [
     Module\MongoDriver\Module::CONF_KEY
-    => array(
+    => [
+
+        ## Your extended repository settings can be add as an item into this:
+        \Module\MongoDriver\Services\aServiceRepository::CONF_REPOSITORIES => [
+            ## Configuration of Repository Service To Register And Retrieve From IOC,
+            #- Usually Implemented with modules that implement mongo usage
+            #- with specific key name as repo name.
+            // @see aServiceRepository bellow
+            \Module\MongoDriver\Services\aServiceRepository::class
+            => [
+                // default db name
+                'db_name' => 'papioniha',
+            ],
+        ],
 
         // Client Connections By Name:
         /** @see MongoDriverManagementFacade::getClient */
-        'clients' => array(
+        'clients' => [
 
-            'master' => array(
+            'master' => [
                 'host' => 'mongodb://db-master-mongo:27017/',
-                'db'   => 'tenderbin',
-            ),
+            ],
 
             /*'anar_production'  => array(
                 ## mongodb://[username:password@]host1[:port1][,host2[:port2],...[,hostN[:portN]]][/[database][?options]]
@@ -21,6 +33,6 @@ return array(
 
                 ## Required Database Name To Client Connect To
                 'db'   => 'kookoja',  ),*/
-        ),
-    ),
-);
+        ],
+    ],
+];
