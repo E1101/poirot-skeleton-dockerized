@@ -2,11 +2,6 @@
 use Module\OAuth2Client\Actions\ServiceAssertTokenAction;
 
 return [
-    ## ----------------------------------- ##
-    ## OAuth2Client Module Must Configured ##
-    ## to assert tokens ...                ##
-    ## ----------------------------------- ##
-
     \Module\OAuth2Client\Module::CONF => [
 
         // Connect To OAuth Server To Assert Token
@@ -31,14 +26,10 @@ return [
                 ],
             ],
 
+            /** @see OAuth2\Services\ServiceAssertToken */
             // aAssertion Instance Or Registered Service
-            'assertion_rig' => new \Poirot\Ioc\instance(
-                \Poirot\OAuth2Client\Assertion\AssertByRemoteServer::class
-                , [
-                    // Client Argument Attained From Registered Service
-                    'client' => new \Poirot\Ioc\instance('/module/oauth2client/services/OAuthClient'),
-                ]
-            ),
+            // AssertByInternalServer
+            'assertion_rig' => '/module/oauth2/services/AssertToken',
         ],
     ],
 ];

@@ -29,7 +29,7 @@ RUN apt-get install -yq --force-yes --fix-missing \
         pkg-config libssl-dev libsslcommon2-dev \
         && git clone https://github.com/mongodb/mongo-php-driver.git \
         && cd mongo-php-driver \
-        && git checkout tags/1.1.9 -b build \
+        && git checkout tags/1.2.5 -b build \
         && git submodule sync && git submodule update --init \
         && phpize && ./configure && make all -j 5 && make install \
         && echo "extension=mongodb.so" >> /etc/php/7.0/apache2/php.ini
