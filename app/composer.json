@@ -8,9 +8,7 @@
     ]
     , "require": {
         "poirot/skeleton": "dev-devel"
-        , "poirot/mod-oauth2_server": "dev-devel"
-        , "poirot/mod-content": "dev-devel"
-        , "poirot/mod-tenderbin": "dev-devel"
+
     }
     , "require-dev": {
        "mmucklo/krumo": "^0.5.0"
