@@ -1,0 +1,9 @@
+#!/usr/bin/env php
+
+##
+# ! Use Within Container as Command:
+#   docker-compose exec papion_web-server ./poirot
+##
+<?php
+
+require __DIR__.'/index.php';
