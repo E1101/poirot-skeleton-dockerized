@@ -2,9 +2,6 @@
 return array(
     'modules' => array(
         // Enabled Application Module(s)
-        'OAuth2',
-        'Content',
-        'TenderBin',
     ),
 
     'module_manager' => array(
