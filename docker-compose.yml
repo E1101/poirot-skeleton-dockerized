@@ -15,13 +15,13 @@ services:
   ## --------------------------------------------
   ## | Web Server Php7 and required Extensions
   ## --------------------------------------------
-  papion_web-server:
+  poirot_web-server:
     build:
       context: ./.docker-compose/web-server
       dockerfile: Dockerfile
     depends_on:
       - db-master-mongo
-    image: papion_web-server
+    image: poirot_web-server
     expose:
       - "80"
     environment:
@@ -37,7 +37,7 @@ services:
       - OAUTH_DEBUG_OWNERID=owner_id
       - OAUTH_DEBUG_SCOPES=test debug
       ## OAUTH Client Remote Server ------------------------------------------|
-      - OAUTH_BASE_URL=http://172.19.0.1:8000/
+      - OAUTH_BASE_URL=http://0.0.0.0:80/
       - OAUTH_CLIENT_ID=test@default.axGEceVCtGqZAdW3rc34sqbvTASSTZxD
       - OAUTH_CLIENT_SECRET=xPWIpmzBK38MmDRd
     volumes:
@@ -70,11 +70,11 @@ services:
   ## --------------------------------------------
   ## | Backup Data
   ## --------------------------------------------
-  papion_admin:
+  poirot_admin:
     build:
       context: ./.docker-compose/backup
       dockerfile: Dockerfile
-    image: papion_admin
+    image: poirot_admin
     depends_on:
       - db-master-mongo
     volumes:
@@ -84,12 +84,11 @@ services:
   ## --------------------------------------------
   ## | Mongo Db Administration
   ## --------------------------------------------
-  papion_admin-mongo:
+  poirot_admin-mongo:
     image: mongo-express:latest
     depends_on:
       - db-master-mongo
     ports:
-      - "8081:8081"
+      - "8081"
     environment:
       - ME_CONFIG_MONGODB_SERVER=db-master-mongo
-

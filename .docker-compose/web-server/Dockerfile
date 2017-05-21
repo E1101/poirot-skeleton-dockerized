@@ -40,13 +40,23 @@ RUN chmod a+x /docker/bin/*.sh \
     && ln -s /docker/bin/update.sh /usr/local/bin/update \
     && ln -s /docker/bin/bootup.sh /usr/local/bin/bootup \
     && ln -s /docker/bin/sync.sh /usr/local/bin/sync
+ENV PATH="$PATH:/docker/bin/"
 
+
+## --------------------------------------------
+## | Setup Object Storage Crons
+## --------------------------------------------
 
 COPY ["./etc/cron.d/", "/etc/cron.d/"]
 # Give execution rights on the cron job
 # Create the log file to be able to run tail
 RUN chmod -R 0644 /etc/cron.d/.
 
-ENV PATH="$PATH:/docker/bin/"
+## --------------------------------------------
+## | Setup Apache Specific Config
+## --------------------------------------------
+RUN a2enmod rewrite
+
+
 WORKDIR /var/www/html/
 CMD ["/docker/bin/run.sh"]

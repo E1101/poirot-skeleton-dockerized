@@ -5,6 +5,8 @@ if [ -f /docker/initialized ]; then
    rm /docker/initialized
 fi
 
+chmod 0777 -R /v-share/
+
 if [[ "${DEBUG:?}" == "true" ]]; then
     ## Debug Mode
     printf "\033[0;32m > Installing XDebug ...\n"
@@ -14,11 +16,15 @@ if [[ "${DEBUG:?}" == "true" ]]; then
     #PHPCONF="/etc/php/7.0/apache2/conf.d/20-xdebug.ini"
     #apt-get install -yq --force-yes --fix-missing php-xdebug
 
-    apt-get install -yq --force-yes --fix-missing php5-xdebug
-    PHPCONF="/usr/local/etc/php/200-xdebug.ini"
+    pecl install xdebug-2.5.0 && docker-php-ext-enable xdebug
+
+    PHPCONF="/usr/local/etc/php/conf.d/200-xdebug.ini"
     echo "xdebug.remote_enable=1" >> ${PHPCONF}
     echo "xdebug.remote_host=${HOST_IP}" >> ${PHPCONF}
     echo "xdebug.profiler_enable=0" >> ${PHPCONF}
+    # ?XDEBUG_PROFILE
+    echo "xdebug.profiler_enable_trigger=1" >> ${PHPCONF}
+    echo "xdebug.profiler_output_dir=\"/v-share\"" >> ${PHPCONF}
 
     ## install composer
     printf "\033[0;32m > Installing Composer Packages ...\n"

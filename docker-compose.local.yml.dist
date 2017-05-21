@@ -2,31 +2,27 @@ version: '2'
 
 services:
 
-  ## --------------------------------------------
-  ## | Web Server Php7 and required Extensions
-  ## --------------------------------------------
-  papion_web-server:
-    environment:
-      ## XDebug:
-      - DEBUG=true
-      - HOST_IP=[YOUR.IP]
-      ## force base url prefix
-      #- PT_BASEURL=/oauth
-      ## OAuth Debug Mode -------------|
-      - OAUTH_DEBUG_MODE=True
-      - OAUTH_DEBUG_CLIENTID=client_id
-      - OAUTH_DEBUG_OWNERID=
-      - OAUTH_DEBUG_SCOPES=test debug
-    ports:
-      - "8000:80"
+    ## --------------------------------------------
+    ## | Web Server Php7 and required Extensions
+    ## --------------------------------------------
+    poirot_web-server:
+      environment:
+        ## XDebug:
+        - DEBUG=true
+        - HOST_IP=172.20.187.31
+        ## force base url prefix
+        #- PT_BASEURL=/oauth
+        ## OAuth Debug Mode -------------|
+        - OAUTH_DEBUG_MODE=false
+        - OAUTH_DEBUG_CLIENTID=test@default.axGEceVCtGqZAdW3rc34sqbvTASSTZxD
+        - OAUTH_DEBUG_OWNERID=58f5f1b45a4eb80012793111
+        - OAUTH_DEBUG_SCOPES=test debug
+      ports:
+        - "8000:80"
 
-  ###################
-  ## Administration
-  ## ################
-
-  ## --------------------------------------------
-  ## | Mongo Db Administration
-  ## --------------------------------------------
-  papion_admin-rockmongo:
-    ports:
-      - "32800:80"
+    ## --------------------------------------------
+    ## | Mongo Db Administration
+    ## --------------------------------------------
+    poirot_admin-mongo:
+      ports:
+        - "8081:8081"
