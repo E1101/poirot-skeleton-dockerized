@@ -42,7 +42,7 @@ services:
       - OAUTH_CLIENT_SECRET=xPWIpmzBK38MmDRd
     volumes:
      - ./app/:/var/www/html/
-     - ./.docker-compose/web-server/etc/php/php.ini:/usr/local/etc/php/100-custom_docker.ini
+     - ./.docker-compose/web-server/etc/php/php.ini:/usr/local/etc/php/conf.d/100-custom_docker.ini
      # - ./.docker-compose/web-server/etc/php/php.ini:/etc/php/7.0/apache2/conf.d/100-custom_docker.ini
      - ./.docker-compose/web-server/skeleton/.env.php:/docker/.env.php
      - ./.docker-compose/web-server/skeleton/config/:/docker/config/
